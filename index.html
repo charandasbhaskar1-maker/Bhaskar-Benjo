@@ -3,333 +3,461 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#080b12">
-<title>Bhaskar Benjo V2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Bhaskar Benjo V3</title>
 
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
 body{
- margin:0;background:#080b12;color:#f5f7ff;
- font-family:system-ui,Arial;overflow:hidden;user-select:none
+  margin:0;background:#080b12;color:white;
+  font-family:Arial,sans-serif;overflow:hidden;
+  touch-action:none;
 }
-button{border:0;color:white;font-weight:800;touch-action:manipulation}
-.app{height:100dvh;width:100%;padding:5px;display:flex;flex-direction:column}
+.app{
+  height:100dvh;width:100vw;
+  display:flex;flex-direction:column;
+  padding:10px;gap:10px;
+}
 .header{
- display:flex;align-items:center;gap:10px;background:#151b28;
- padding:8px 12px;border-radius:12px;flex-shrink:0
+  display:flex;align-items:center;justify-content:space-between;
+  background:#151b28;border:1px solid #263449;
+  padding:10px 14px;border-radius:15px;
 }
-.logo{
- width:38px;height:38px;display:grid;place-items:center;
- border-radius:11px;background:linear-gradient(135deg,#8057ff,#29d9ff);font-size:22px
-}
-.header h1{font-size:16px;margin:0}
-.header p{font-size:10px;color:#9aa5b8;margin:2px 0}
-.panel{
- flex:1;min-height:0;margin-top:5px;padding:6px;
- background:#151b28;border-radius:12px;display:flex;flex-direction:column
-}
-.top{display:flex;align-items:center;gap:5px}
+.brand{font-size:21px;font-weight:bold;color:#29d9ff}
+.version{font-size:11px;color:#8e9bb0}
 .display{
- flex:1;min-width:0;background:#080b12;border-radius:9px;padding:4px 10px;
- display:flex;justify-content:space-between;align-items:center;min-height:34px
+  background:#101827;border:1px solid #263449;
+  border-radius:14px;padding:8px 14px;
+  display:flex;align-items:center;justify-content:space-between;
 }
-.note{font-size:20px;font-weight:900;color:#29d9ff}
-.status{font-size:10px;color:#9aa5b8;text-align:right}
-.controls{display:flex;gap:5px;margin-top:4px}
-.controls button{flex:1;padding:7px;border-radius:9px;font-size:11px;background:#263047}
-.purple{background:#8057ff!important}
-.volume{display:flex;align-items:center;gap:8px;margin:3px;flex-shrink:0}
-.volume span{font-size:10px;color:#9aa5b8}
-input[type=range]{flex:1;min-width:0;accent-color:#8057ff}
-.octave{display:flex;justify-content:center;align-items:center;gap:10px;margin:3px}
-.octave button{width:38px;height:27px;border-radius:8px;background:#263047;font-size:17px}
-.octinfo{text-align:center;min-width:60px}
-.octinfo small{display:block;color:#9aa5b8;font-size:9px}
-.octinfo strong{font-size:15px}
-.keyboard{
- flex:1;min-height:0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
- gap:3px;margin-top:3px;touch-action:none
+#noteDisplay{font-size:25px;color:#29d9ff;font-weight:bold}
+#status{font-size:12px;color:#a3b2c8}
+.controls{
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:8px;
+}
+button{
+  border:1px solid #344359;border-radius:10px;
+  background:#192334;color:white;
+  padding:10px 14px;font-size:14px;font-weight:bold;
+}
+button:active{background:#8057ff}
+#soundBtn{background:#176c56}
+.stop{background:#9c2838}
+.volume{
+  background:#151b28;padding:8px 12px;border-radius:12px;
+  display:flex;align-items:center;gap:8px;font-size:12px;
+}
+input[type=range]{width:100px;accent-color:#29d9ff}
+.keys{
+  flex:1;min-height:120px;
+  display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:5px;padding:5px 2px 12px;
 }
 .key{
- display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;
- min-width:0;border-radius:0 0 6px 6px;border:1px solid #485265;
- touch-action:none;overflow:hidden
+  border-radius:0 0 13px 13px;
+  background:linear-gradient(180deg,#f8fbff,#c5d0df);
+  color:#111827;border:1px solid #91a0b5;
+  display:flex;flex-direction:column;
+  justify-content:flex-end;align-items:center;
+  padding:10px 2px;font-weight:bold;
+  box-shadow:0 5px 0 #64748b;
+  user-select:none;-webkit-user-select:none;
+  touch-action:none;
 }
-.white{background:linear-gradient(#fff,#dce4ef);color:#111827;border-color:#b7c0ce}
-.black{background:linear-gradient(#343d50,#080b12);color:#fff}
-.key.active{background:linear-gradient(#29d9ff,#8057ff)!important;color:white!important;box-shadow:0 0 12px #29d9ff66}
-.key span{text-align:center;font-size:clamp(9px,2.5vw,13px);font-weight:900;pointer-events:none}
-.key small{display:block;font-size:9px}
-.footer{text-align:center;color:#69758a;font-size:9px;padding-top:3px}
+.key .western{font-size:clamp(12px,2vw,20px)}
+.key .indian{font-size:clamp(10px,1.6vw,15px);color:#45566d;margin-top:6px}
+.key.active{
+  background:linear-gradient(180deg,#a5f5ff,#29d9ff);
+  box-shadow:0 1px 0 #1689a6;transform:translateY(4px);
+}
+.footer{text-align:center;font-size:10px;color:#66768e;padding-bottom:3px}
 .rotate{
- position:fixed;inset:0;z-index:99;display:none;align-items:center;justify-content:center;
- background:#080b12;text-align:center;padding:20px
+  display:none;position:fixed;inset:0;background:#080b12;
+  z-index:999;align-items:center;justify-content:center;
+  text-align:center;padding:30px;
 }
-.rotate div{background:#151b28;padding:24px;border-radius:20px;max-width:320px}
-.rotate h2{margin:8px}
-.rotate p{color:#9aa5b8;font-size:13px}
-.rotate button{background:#8057ff;border-radius:10px;padding:12px 18px}
-@media(orientation:portrait){.rotate{display:flex}}
+.rotate button{margin-top:20px;background:#8057ff}
+@media(orientation:portrait){
+  .rotate{display:flex}
+}
 @media(orientation:landscape){
- .header{display:none}
- .app{padding:3px}
- .panel{margin:0;padding:4px}
- .display{min-height:29px}
- .note{font-size:17px}
- .controls{margin-top:3px}
- .controls button{padding:5px;min-height:27px}
- .volume{margin:2px}
- .octave{margin:1px}
- .octave button{height:23px}
- .keyboard{margin-top:2px;gap:2px}
- .key{height:100%;padding-bottom:3px}
- .footer{display:none}
+  .app{padding:7px;gap:6px}
+  .header{padding:6px 12px}
+  .brand{font-size:18px}
+  .display{padding:5px 12px}
+  #noteDisplay{font-size:21px}
+  button{padding:8px 12px}
+  .keys{padding-bottom:8px}
 }
 </style>
 </head>
+
 <body>
 
 <div class="rotate">
- <div>
-  <div style="font-size:48px">🎸</div>
-  <h2>Bhaskar Benjo</h2>
-  <p>बैंजो बजाने के लिए मोबाइल आड़ा करें।</p>
-  <button onclick="goLandscape()">Landscape खोलें</button>
- </div>
+  <div>
+    <div style="font-size:50px">🎸</div>
+    <h2>Bhaskar Benjo</h2>
+    <p>बेहतर बजाने के लिए मोबाइल को Landscape करें</p>
+    <button onclick="goLandscape()">LANDSCAPE खोलें</button>
+  </div>
 </div>
 
 <div class="app">
- <div class="header">
-  <div class="logo">🎸</div>
-  <div><h1>Bhaskar Benjo</h1><p>Benjo Sound Engine V2</p></div>
- </div>
 
- <div class="panel">
-  <div class="top">
-   <div class="display">
-    <div class="note" id="noteDisplay">READY</div>
-    <div class="status" id="status">Touch to play</div>
-   </div>
+  <div class="header">
+    <div class="brand">🎸 Bhaskar Benjo</div>
+    <div class="version">SOUND ENGINE V3</div>
+  </div>
+
+  <div class="display">
+    <div id="noteDisplay">सा</div>
+    <div id="status">Benjo Ready</div>
   </div>
 
   <div class="controls">
-   <button class="purple" id="soundBtn" onclick="toggleSound()">🔊 SOUND ON</button>
-   <button onclick="stopAll()">■ STOP</button>
-   <button onclick="goLandscape()">⛶ FULL</button>
+    <button id="soundBtn">🔊 SOUND ON</button>
+    <button class="stop" id="stopBtn">⏹ STOP</button>
+    <button id="fullBtn">⛶ FULL</button>
+
+    <button id="downBtn">− OCT</button>
+    <div id="octaveDisplay">OCT 3</div>
+    <button id="upBtn">+ OCT</button>
+
+    <div class="volume">
+      VOL
+      <input id="volume" type="range" min="0" max="100" value="75">
+      <span id="volText">75%</span>
+    </div>
   </div>
 
-  <div class="volume">
-   <span>VOL</span>
-   <input id="volume" type="range" min="0" max="100" value="75">
-   <span id="volText">75%</span>
-  </div>
+  <div class="keys" id="keyboard"></div>
 
-  <div class="octave">
-   <button onclick="changeOctave(-1)">−</button>
-   <div class="octinfo"><small>OCTAVE</small><strong id="octaveDisplay">4</strong></div>
-   <button onclick="changeOctave(1)">+</button>
-  </div>
-
-  <div class="keyboard" id="keyboard"></div>
-  <div class="footer">BENJO SOUND ENGINE V2 • TOUCH • SLIDE • MULTI-NOTE</div>
- </div>
+  <div class="footer">BHASKAR BENJO • INDIAN ELECTRONIC INSTRUMENT</div>
 </div>
 
 <script>
-let ctx=null,master=null;
-let soundOn=true,octave=4;
-const voices=new Map();
-const pointerKey=new Map();
+const noteDisplay = document.getElementById("noteDisplay");
+const statusEl = document.getElementById("status");
+const soundBtn = document.getElementById("soundBtn");
+const octaveDisplay = document.getElementById("octaveDisplay");
+const keyboard = document.getElementById("keyboard");
+const volume = document.getElementById("volume");
+const volText = document.getElementById("volText");
 
-const notes=[
- {n:"C",h:"सा",s:0,b:false},
- {n:"C#",h:"",s:1,b:true},
- {n:"D",h:"रे",s:2,b:false},
- {n:"D#",h:"",s:3,b:true},
- {n:"E",h:"ग",s:4,b:false},
- {n:"F",h:"म",s:5,b:false},
- {n:"F#",h:"",s:6,b:true},
- {n:"G",h:"प",s:7,b:false},
- {n:"G#",h:"",s:8,b:true},
- {n:"A",h:"ध",s:9,b:false},
- {n:"A#",h:"",s:10,b:true},
- {n:"B",h:"नि",s:11,b:false}
+let audioCtx = null;
+let master = null;
+let soundOn = true;
+let octave = 3;
+
+const notes = [
+  {name:"C", indian:"सा"},
+  {name:"C#",indian:"रे♭"},
+  {name:"D", indian:"रे"},
+  {name:"D#",indian:"ग♭"},
+  {name:"E", indian:"ग"},
+  {name:"F", indian:"म"},
+  {name:"F#",indian:"म♭"},
+  {name:"G", indian:"प"},
+  {name:"G#",indian:"ध♭"},
+  {name:"A", indian:"ध"},
+  {name:"A#",indian:"नि♭"},
+  {name:"B", indian:"नि"}
 ];
 
-function audioInit(){
- if(ctx)return;
- ctx=new (window.AudioContext||window.webkitAudioContext)();
- master=ctx.createGain();
- master.gain.value=Number(volume.value)/100;
- master.connect(ctx.destination);
+const voices = new Map();
+const pointers = new Map();
+const keyElements = [];
+
+function initAudio(){
+  if(audioCtx)return;
+
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  master = audioCtx.createGain();
+  master.gain.value = volume.value/100;
+
+  const compressor = audioCtx.createDynamicsCompressor();
+  compressor.threshold.value = -15;
+  compressor.knee.value = 15;
+  compressor.ratio.value = 4;
+  compressor.attack.value = 0.003;
+  compressor.release.value = 0.18;
+
+  master.connect(compressor);
+  compressor.connect(audioCtx.destination);
 }
 
-function hz(midi){return 440*Math.pow(2,(midi-69)/12)}
-function midiFor(index){return 12*(octave+1)+notes[index].s}
+function hz(midi){
+  return 440*Math.pow(2,(midi-69)/12);
+}
 
-function makeBenjoVoice(index,pid){
- if(!soundOn)return;
- audioInit();
- if(ctx.state==="suspended")ctx.resume();
+function midi(index){
+  return 12*(octave+1)+index;
+}
 
- const old=voices.get(pid);
- if(old){
-   glideVoice(pid,index);
-   return;
- }
+function createVoice(index,pid){
+  initAudio();
+  if(audioCtx.state==="suspended")audioCtx.resume();
 
- const now=ctx.currentTime;
- const f=hz(midiFor(index));
- const amp=ctx.createGain();
- amp.gain.setValueAtTime(0.0001,now);
- amp.gain.exponentialRampToValueAtTime(0.5,now+0.006);
- amp.gain.exponentialRampToValueAtTime(0.19,now+0.09);
+  const now=audioCtx.currentTime;
+  const fundamental=hz(midi(index));
 
- const filter=ctx.createBiquadFilter();
- filter.type="lowpass";
- filter.frequency.setValueAtTime(7200,now);
- filter.Q.value=0.7;
- filter.connect(amp);
- amp.connect(master);
+  const amp=audioCtx.createGain();
+  amp.gain.setValueAtTime(0.0001,now);
 
- // Bright plucked metallic synthesized timbre (not a piano sample).
- const specs=[
-  {ratio:1,type:"sawtooth",level:0.22},
-  {ratio:1,type:"triangle",level:0.55},
-  {ratio:2.01,type:"sine",level:0.15},
-  {ratio:3.02,type:"triangle",level:0.06},
-  {ratio:4.04,type:"sine",level:0.035}
- ];
- const os=[];
- specs.forEach(spec=>{
-  const o=ctx.createOscillator(),g=ctx.createGain();
-  o.type=spec.type;
-  o.frequency.setValueAtTime(f*spec.ratio,now);
-  g.gain.value=spec.level;
-  o.connect(g);g.connect(filter);o.start(now);
-  os.push({o,g,ratio:spec.ratio});
- });
+  amp.gain.exponentialRampToValueAtTime(0.65,now+0.008);
+  amp.gain.exponentialRampToValueAtTime(0.35,now+0.08);
 
- // Tiny transient for a plucked attack
- const click=ctx.createOscillator(),clickGain=ctx.createGain();
- click.type="square";
- click.frequency.setValueAtTime(f*5,now);
- clickGain.gain.setValueAtTime(0.045,now);
- clickGain.gain.exponentialRampToValueAtTime(0.0001,now+0.025);
- click.connect(clickGain);clickGain.connect(master);
- click.start(now);click.stop(now+0.03);
+  const filter=audioCtx.createBiquadFilter();
+  filter.type="lowpass";
+  filter.frequency.value=5200;
+  filter.Q.value=1.1;
 
- voices.set(pid,{amp,filter,os,index});
- pointerKey.set(pid,index);
- showNote(index);
- paintKeys();
+  const oscillators=[];
+
+  // Metallic Indian electronic benjo harmonics
+  const partials=[
+    {ratio:1, gain:0.90, type:"sawtooth"},
+    {ratio:2, gain:0.34, type:"triangle"},
+    {ratio:3, gain:0.19, type:"sawtooth"},
+    {ratio:4, gain:0.10, type:"triangle"},
+    {ratio:5.02,gain:0.055,type:"sine"}
+  ];
+
+  partials.forEach(part=>{
+    const osc=audioCtx.createOscillator();
+    const g=audioCtx.createGain();
+
+    osc.type=part.type;
+    osc.frequency.value=fundamental*part.ratio;
+    g.gain.value=part.gain;
+
+    osc.connect(g);
+    g.connect(filter);
+
+    osc.start(now);
+    oscillators.push({osc,g,ratio:part.ratio});
+  });
+
+  // Plucked metallic attack
+  const attackOsc=audioCtx.createOscillator();
+  const attackGain=audioCtx.createGain();
+
+  attackOsc.type="square";
+  attackOsc.frequency.value=fundamental*2.01;
+
+  attackGain.gain.setValueAtTime(0.0001,now);
+  attackGain.gain.exponentialRampToValueAtTime(0.10,now+0.003);
+  attackGain.gain.exponentialRampToValueAtTime(0.0001,now+0.045);
+
+  attackOsc.connect(attackGain);
+  attackGain.connect(filter);
+  attackOsc.start(now);
+  attackOsc.stop(now+0.06);
+
+  // Metallic string-like resonance
+  const resonance=audioCtx.createOscillator();
+  const resonanceGain=audioCtx.createGain();
+
+  resonance.type="sine";
+  resonance.frequency.value=fundamental*2.76;
+  resonanceGain.gain.value=0.035;
+
+  resonance.connect(resonanceGain);
+  resonanceGain.connect(filter);
+  resonance.start(now);
+
+  filter.connect(amp);
+  amp.connect(master);
+
+  voices.set(pid,{
+    amp,filter,oscillators,resonance,resonanceGain,
+    index,started:now
+  });
+
+  pointers.set(pid,index);
+  paintKey(index,true);
+  showNote(index);
 }
 
 function glideVoice(pid,newIndex){
- const v=voices.get(pid);
- if(!v)return;
- const now=ctx.currentTime;
- const target=hz(midiFor(newIndex));
- v.os.forEach(item=>{
-  item.o.frequency.cancelScheduledValues(now);
-  item.o.frequency.setTargetAtTime(target*item.ratio,now,0.035);
- });
- v.index=newIndex;
- pointerKey.set(pid,newIndex);
- showNote(newIndex);
- paintKeys();
+  const voice=voices.get(pid);
+  if(!voice)return;
+
+  const now=audioCtx.currentTime;
+  const target=hz(midi(newIndex));
+
+  voice.oscillators.forEach(item=>{
+    item.osc.frequency.setTargetAtTime(
+      target*item.ratio,now,0.025
+    );
+  });
+
+  voice.resonance.frequency.setTargetAtTime(
+    target*2.76,now,0.03
+  );
+
+  voice.index=newIndex;
+  pointers.set(pid,newIndex);
+  paintKey(newIndex,true);
+  showNote(newIndex);
 }
 
 function releaseVoice(pid){
- const v=voices.get(pid);
- if(!v)return;
- const now=ctx.currentTime;
- v.amp.gain.cancelScheduledValues(now);
- v.amp.gain.setValueAtTime(Math.max(v.amp.gain.value,0.0001),now);
- v.amp.gain.exponentialRampToValueAtTime(0.0001,now+0.12);
- v.os.forEach(item=>{try{item.o.stop(now+0.13)}catch(e){}});
- voices.delete(pid);
- pointerKey.delete(pid);
- paintKeys();
+  const voice=voices.get(pid);
+  if(!voice)return;
+
+  const now=audioCtx.currentTime;
+
+  voice.amp.gain.cancelScheduledValues(now);
+  voice.amp.gain.setValueAtTime(
+    Math.max(voice.amp.gain.value,0.0001),now
+  );
+  voice.amp.gain.exponentialRampToValueAtTime(0.0001,now+0.18);
+
+  voice.oscillators.forEach(item=>{
+    item.osc.stop(now+0.20);
+  });
+
+  voice.resonance.stop(now+0.20);
+
+  setTimeout(()=>{
+    voice.amp.disconnect();
+    voice.filter.disconnect();
+  },250);
+
+  paintKey(voice.index,false);
+  voices.delete(pid);
+  pointers.delete(pid);
 }
 
-function showNote(i){
- noteDisplay.textContent=notes[i].n+octave;
- status.textContent="Benjo playing";
+function paintKey(index,on){
+  const el=keyElements[index];
+  if(el)el.classList.toggle("active",on);
 }
 
-function paintKeys(){
- document.querySelectorAll(".key").forEach(k=>{
-  const i=Number(k.dataset.i);
-  k.classList.toggle("active",[...pointerKey.values()].includes(i));
- });
+function showNote(index){
+  noteDisplay.textContent=notes[index].indian;
+  statusEl.textContent=notes[index].name+" • "+octave;
 }
 
 function stopAll(){
- [...voices.keys()].forEach(releaseVoice);
- noteDisplay.textContent="READY";
- status.textContent="Touch to play";
+  [...voices.keys()].forEach(releaseVoice);
+  noteDisplay.textContent="—";
+  statusEl.textContent="STOPPED";
 }
 
-function toggleSound(){
- soundOn=!soundOn;
- soundBtn.textContent=soundOn?"🔊 SOUND ON":"🔇 SOUND OFF";
- soundBtn.classList.toggle("purple",soundOn);
- if(!soundOn)stopAll();
-}
+function buildKeyboard(){
+  keyboard.innerHTML="";
+  keyElements.length=0;
 
-function changeOctave(d){
- octave=Math.max(2,Math.min(6,octave+d));
- octaveDisplay.textContent=octave;
-}
+  notes.forEach((n,index)=>{
+    const el=document.createElement("div");
+    el.className="key";
+    el.innerHTML=
+      '<span class="western">'+n.name+'</span>'+
+      '<span class="indian">'+n.indian+'</span>';
 
-volume.addEventListener("input",()=>{
- volText.textContent=volume.value+"%";
- if(master)master.gain.value=volume.value/100;
-});
+    el.dataset.index=index;
+    keyboard.appendChild(el);
+    keyElements.push(el);
+  });
+}
 
 function keyAt(x,y){
- const el=document.elementFromPoint(x,y);
- return el?el.closest(".key"):null;
+  const element=document.elementFromPoint(x,y);
+  const key=element?.closest(".key");
+  return key ? Number(key.dataset.index) : null;
 }
 
-notes.forEach((note,i)=>{
- const k=document.createElement("div");
- k.className="key "+(note.b?"black":"white");
- k.dataset.i=i;
- k.innerHTML=`<span>${note.n}<small>${note.h}</small></span>`;
+function pointerDown(e){
+  const index=keyAt(e.clientX,e.clientY);
+  if(index===null)return;
 
- k.addEventListener("pointerdown",e=>{
   e.preventDefault();
-  try{k.setPointerCapture(e.pointerId)}catch(err){}
-  makeBenjoVoice(i,e.pointerId);
- });
+  initAudio();
 
- k.addEventListener("pointermove",e=>{
+  const pid=e.pointerId;
+  if(voices.has(pid))releaseVoice(pid);
+
+  createVoice(index,pid);
+  e.target.setPointerCapture?.(pid);
+}
+
+function pointerMove(e){
   if(!voices.has(e.pointerId))return;
-  const dest=keyAt(e.clientX,e.clientY);
-  if(!dest)return;
-  const ni=Number(dest.dataset.i);
-  if(pointerKey.get(e.pointerId)!==ni)glideVoice(e.pointerId,ni);
- });
+  e.preventDefault();
 
- k.addEventListener("pointerup",e=>releaseVoice(e.pointerId));
- k.addEventListener("pointercancel",e=>releaseVoice(e.pointerId));
- k.addEventListener("lostpointercapture",e=>releaseVoice(e.pointerId));
- keyboard.appendChild(k);
-});
+  const index=keyAt(e.clientX,e.clientY);
+  if(index===null)return;
+
+  const old=pointers.get(e.pointerId);
+  if(old!==index){
+    paintKey(old,false);
+    glideVoice(e.pointerId,index);
+  }
+}
+
+function pointerUp(e){
+  releaseVoice(e.pointerId);
+}
+
+keyboard.addEventListener("pointerdown",pointerDown);
+keyboard.addEventListener("pointermove",pointerMove);
+keyboard.addEventListener("pointerup",pointerUp);
+keyboard.addEventListener("pointercancel",pointerUp);
+keyboard.addEventListener("lostpointercapture",pointerUp);
+
+soundBtn.onclick=()=>{
+  soundOn=!soundOn;
+  soundBtn.textContent=soundOn?"🔊 SOUND ON":"🔇 SOUND OFF";
+  soundBtn.style.background=soundOn?"#176c56":"#7c2635";
+
+  if(master){
+    master.gain.setTargetAtTime(
+      soundOn?volume.value/100:0,
+      audioCtx.currentTime,0.03
+    );
+  }
+};
+
+document.getElementById("stopBtn").onclick=stopAll;
+
+volume.oninput=()=>{
+  volText.textContent=volume.value+"%";
+  if(master && soundOn){
+    master.gain.setTargetAtTime(
+      volume.value/100,audioCtx.currentTime,0.02
+    );
+  }
+};
+
+function changeOctave(amount){
+  octave=Math.max(1,Math.min(7,octave+amount));
+  octaveDisplay.textContent="OCT "+octave;
+  statusEl.textContent="OCTAVE "+octave;
+}
+
+document.getElementById("upBtn").onclick=()=>changeOctave(1);
+document.getElementById("downBtn").onclick=()=>changeOctave(-1);
 
 async function goLandscape(){
- try{
-  if(!document.fullscreenElement)await document.documentElement.requestFullscreen();
- }catch(e){}
- try{
-  if(screen.orientation?.lock)await screen.orientation.lock("landscape");
- }catch(e){
-  alert("Auto-rotate ON करके फोन आड़ा करें।");
- }
+  try{
+    if(document.documentElement.requestFullscreen)
+      await document.documentElement.requestFullscreen();
+
+    if(screen.orientation?.lock)
+      await screen.orientation.lock("landscape");
+  }catch(e){
+    alert("मोबाइल को Landscape घुमाएँ।");
+  }
 }
+
+document.getElementById("fullBtn").onclick=goLandscape;
+
+buildKeyboard();
 </script>
 </body>
 </html>
